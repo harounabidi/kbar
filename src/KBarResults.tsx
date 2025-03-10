@@ -16,6 +16,7 @@ interface KBarResultsProps {
   items: any[];
   onRender: (params: RenderParams) => React.ReactElement;
   maxHeight?: number;
+  className?: string;
 }
 
 export const KBarResults: React.FC<KBarResultsProps> = (props) => {
@@ -45,7 +46,7 @@ export const KBarResults: React.FC<KBarResultsProps> = (props) => {
       if (event.isComposing) {
         return;
       }
-      
+
       if (event.key === "ArrowUp" || (event.ctrlKey && event.key === "p")) {
         event.preventDefault();
         event.stopPropagation();
@@ -84,8 +85,9 @@ export const KBarResults: React.FC<KBarResultsProps> = (props) => {
         activeRef.current?.click();
       }
     };
-    window.addEventListener("keydown", handler, {capture: true});
-    return () => window.removeEventListener("keydown", handler, {capture: true});
+    window.addEventListener("keydown", handler, { capture: true });
+    return () =>
+      window.removeEventListener("keydown", handler, { capture: true });
   }, [query]);
 
   // destructuring here to prevent linter warning to pass
@@ -133,6 +135,7 @@ export const KBarResults: React.FC<KBarResultsProps> = (props) => {
 
   return (
     <div
+      className={props.className}
       ref={parentRef}
       style={{
         maxHeight: props.maxHeight || 400,
